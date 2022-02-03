@@ -1,9 +1,9 @@
 <a href="{% url 'main' %}" class="logo"></a>
 <ul class="menu">
-    {% for link in menu_links%}
+    {% for link in menu_links %}
     <li>
         <a href="{% url link.url %}" 
-            {% if request.resolver_match.url_name == link.url%}
+            {% if request.resolver_match.view_name in link.active %}
                 class="active"
             {% endif %}
         >
@@ -11,10 +11,19 @@
         </a>
     </li>
     {% endfor %}
+
     {% if user.is_authenticated %}
     <li>
         <a href="{% url 'auth:edit' %}">
             {{ user.first_name|default:'Пользователь'}}
+        </a>
+    </li>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <li>
+        <a href="{% url 'basket:view' %}">
+            Корзина
+            {% if user.basket.all|length %} ({{ user.basket.all|length }}) {% endif %}
         </a>
     </li>
     {% endif %}

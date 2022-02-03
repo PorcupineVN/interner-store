@@ -1,0 +1,6 @@
+{% for item in basket %}
+    {{ item }} <a href="{% url 'basket:remove' item.id %}">Удалить</a>
+    <br/>
+{% endfor %}
+<br/>
+В корзине {{ basket|length }} элементов.

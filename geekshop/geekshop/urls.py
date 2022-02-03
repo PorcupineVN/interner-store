@@ -20,17 +20,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-import authapp
+#import authapp
 
 from mainapp import views as mainapp
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', mainapp.index, name='main'),
-    path('contact/', mainapp.contact, name='contact'),
-    path('products/', include('mainapp.urls', namespace='products')),
-    path('auth/', include('authapp.urls', namespace="auth"))
+    path("admin/", admin.site.urls),
+    path("", mainapp.index, name="main"),
+    path("contact/", mainapp.contact, name="contact"),
+    path("products/", include("mainapp.urls", namespace="products")),
+    path("auth/", include("authapp.urls", namespace="auth")),
+    path('basket/', include('basketapp.urls', namespace='basket')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,14 @@
+<div class="links clearfix">
+    <ul class="links-menu">
+        <li><a href="{% url 'products:main' %}" 
+            class="{% if request.resolver_mutch.view_name == 'products:main' %} active {% endif %}"
+            >все</a></li>
+        {% for c in categories %}
+        <li><a href="{% url 'products:category' c.id %}" 
+            class="{% if request.resolver_mutch.view_name in ['products:category', 'products.product'] and request.resolver_mutch.kwargs.category_id == category.id %} 
+            active 
+            {% endif %}"
+        >{{ c.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

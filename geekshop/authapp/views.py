@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib import auth
 from .forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
 
+
 # Create your views here.
 def login(request):
     if request.method == 'POST':
@@ -25,6 +26,12 @@ def login(request):
         'form': login_form
     })
 
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('main'))
+
+
 def register(request):
     if request.method == 'POST':
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
@@ -34,17 +41,12 @@ def register(request):
     else:
        register_form = ShopUserRegisterForm() 
 
-    return render(request, 'authapp/register.html', context={
-        'title': 'Регистрация',
-        'form': register_form
-    })
-
-def logout(request):
-    auth.logout(request)
-    return HttpResponseRedirect(reverse('main'))
+    return render(
+        request, 
+        "authapp/register.html", context={'title': 'Регистрация', 'form': register_form}
+    )
 
 def edit(request):
-    title = 'Редактирование'
     if request.method == 'POST':
         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
         if edit_form.is_valid():
@@ -52,8 +54,9 @@ def edit(request):
             return HttpResponseRedirect(reverse('main'))
     else:
        edit_form = ShopUserEditForm(instance=request.user)
-    content={'title':title, 'edit_form':edit_form}
-    return render(request, 'authapp/edit.html', context={
-        'title': 'Редактирование',
-        'form': edit_form
-    })
+
+    return render(
+        request, 
+        "authapp/edit.html", 
+        context={'title': 'Редактирование', 'form': edit_form},
+    )

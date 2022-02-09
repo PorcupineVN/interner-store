@@ -36,6 +36,7 @@ class ShopUserRegisterForm(UserCreationForm):
             field.widget.attrs['class'] = 'form-control'
 
 
+
 class ShopUserEditForm(UserChangeForm):
     class Meta:
         model = ShopUser
@@ -48,6 +49,8 @@ class ShopUserEditForm(UserChangeForm):
             'city', 
             'phone'
             )
+
+
 
 
     def __init__(self, *args, **kwargs):

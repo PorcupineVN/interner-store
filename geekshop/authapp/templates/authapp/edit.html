@@ -1,0 +1,12 @@
+{% extends 'authapp/base.html' %}
+
+{% block content %}
+    {% if user.avatar %}
+        <img src="{{ user.avatar.url}}"/>
+    {% endif %}
+    <form method='POST' url="{% url "auth:edit" %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type='submit' value='Изменить'>
+    </form>
+{% endblock  %}

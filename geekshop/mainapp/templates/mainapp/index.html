@@ -19,28 +19,16 @@
 		</div>
 {% endblock header %}		
 {% block content %}
-		<div class="featured">
-			<div class="featured-menu">
-					<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
-			</div>
-			<a class="explore" href="#">показать все <img src={% static 'img/arrow.png' %} alt=""></a>
-			<div class="clearfix">
-			</div>
-			<div class="tab-content">
-				{% for product in products %}
-				<div class="block">
-					<a href="#"><img class="product-image" src="{{ product.image.url|default:'/static/img/icon-hover.png' }}" alt=""> 
-						<div class="text">
-							<img src={% static 'img/icon-hover.png' %} alt="img">
-							<h4>{{product.name}}</h4>
-							<p>{{product.description}}</p>
-						</div> 
-					</a>
-				</div>
-				{% endfor %}
-				
-				
-			</div>
-		</div>
+<div class="featured">
+	<div class="featured-menu">
+			<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
+	</div>
+	<a class="explore" href="#">показать все <img src={% static 'img/arrow.png' %} alt=""></a>
+	<div class="clearfix">
+	</div>
+	<div class="tab-content">
+		{% include 'mainapp/includes/inc_products.html' %}			
+	</div>
+</div>
 {% endblock content %}		
 		

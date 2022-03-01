@@ -18,12 +18,10 @@
             {{ user.first_name|default:'Пользователь'}}
         </a>
     </li>
-    {% endif %}
-    {% if user.is_authenticated %}
     <li>
         <a href="{% url 'basket:view' %}">
             Корзина
-            {% if user.basket.all|length %} ({{ user.basket.all|length }}) {% endif %}
+            {{ user.basket.total_cost }} руб. ({{ user.basket.total_quantity }})
         </a>
     </li>
     {% endif %}

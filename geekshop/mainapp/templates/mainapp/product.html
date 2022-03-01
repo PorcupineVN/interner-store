@@ -1,7 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 
-
 {% block header %}
 <div class="hero-white">
 	<div class="header clearfix">
@@ -9,15 +8,16 @@
 	</div>
 </div>
 {% endblock header %}
+
 {% block content %}
 <div class="details">
-	{% include 'mainapp/includes/inc_categories_menu.html' %}
+    {% include 'mainapp/includes/inc_categories_menu.html' %}
 
-	{% if hot_product %}
+	{% if product %}
 	<div class="details-products">
 		<div class="details-slider">
 			<div class="slider-product">
-				<img src="{{ hot_product.image.url }}">
+				<img src="{{ product.image.url }}">
 			</div>
 		<div class="slider-control">
 			<div class="block">
@@ -38,31 +38,17 @@
 		</div>
 
 		<div class="description">
-			<h3 class="big-bold">{{ hot_product.name }}</h3>
+			<h3 class="big-bold">{{ product.name }}</h3>
 			<h3 class="red">горячее предложение</h3>
-			<p class="price">{{ hot_product.price }}<span>руб</span></p>
-			<a href="{% url 'basket:add' hot_product.id %}" class="red-button">
+			<p class="price">{{ product.price }}<span>руб</span></p>
+			<a href="{% url 'basket:add' product.id %}" class="red-button">
 						заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
 			</a>
 			<div class="description-text">
-				{{ hot_product.description|linebreaks }}
+				{{ product.description|linebreaks }}
 			</div>
-		</div>
-	</div>
-	{% endif %}
-
-	
-	{% if products %}
-	<div class="related">
-		<div class="title clearfix">
-			<h2>Похожие продукты</h2>
-			<a class="explore" href="#">показать все <img src={% static 'img/arrow.png' %} alt=""></a>
-		</div>
-		<div class="related-products clearfix">
-			{% include 'mainapp/includes/inc_products.html' %}
 		</div>
 	</div>
 	{% endif %}
 </div>
 {% endblock content %}
-		

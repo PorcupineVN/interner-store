@@ -1,3 +1,14 @@
+{% if paginator %}
+    {% if page.has_previous %}
+        <a href="{% url 'products:page_category' category.id page.previous_page_number %}"> Назад </a>
+    {% endif %}
+
+    Страница {{ page.number }} из {{ paginator.num_pages }}
+
+    {% if page.has_next %}
+        <a href="{% url 'products:page_category' category.id page.next_page_number %}"> Вперёд </a> 
+    {% endif %}
+{% endif %}
 {% for product in products %}
 <div class="block">
     <a href="{% url 'products:product' product.id %}"><img src= {% /media/{{ product.image }}  %} alt="">

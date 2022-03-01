@@ -8,7 +8,16 @@
         новый пользователь
       </a>
     </button>
-    {% for object in objects %}
+    {% if page_obj.has_previous %}
+        <a href="{% url 'products:page_category' category.id page.previous_page_number %}"> Назад </a>
+    {% endif %}
+
+    Страница {{ page_obj.number }} из {{ paginator.num_pages }}
+
+    {% if page_obj.has_next %}
+        <a href="{% url 'products:page_category' category.id page.next_page_number %}"> Вперёд </a> 
+    {% endif %}
+    {% for object in object_list %}
       <div 
        class="user_record {% if not object.is_active %}not_active{% endif %}">
         <img 

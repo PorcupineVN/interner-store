@@ -3,11 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
 from .models import Product, ProductCategory
 
-MENU_LINKS = [
-    {"url": "main", "active":["main"], "name": "Домой"},
-    {"url": "products:main", "active":["products:main", "products:category"], "name": "Продукты"},
-    {"url": "contact", "active":["contact"], "name": "Контакты"},
-]
+
 
 
 
@@ -18,7 +14,6 @@ def index(request):
         "mainapp/index.html", 
         context={
         "title":"Главная",
-        "menu_links": MENU_LINKS,
         "products": products, 
         },
     )
@@ -39,7 +34,6 @@ def products(request):
         'title':'Продукты',
         'products':products.exclude(pk=hot_product.pk)[:4],
         'hot_product': hot_product,
-        'menu_links': MENU_LINKS,
         'categories': categories, 
         },
     )
@@ -66,7 +60,6 @@ def category(request, category_id, page=1):
             'hot_product': get_hot_product(products),
             'paginator': paginator,
             'page': products_page,
-            'menu_links': MENU_LINKS,
             'category' : category,
             'categories': categories, 
         },
@@ -82,7 +75,6 @@ def product(request, product_id):
         context={
         'title':'Продукты',
         'product': product,
-        'menu_links': MENU_LINKS,
         'categories': categories, 
         },
     )
@@ -93,6 +85,5 @@ def contact(request):
         "mainapp/contact.html", 
         context={
         'title':'Контакты',
-        'menu_links': MENU_LINKS, 
         },
     )

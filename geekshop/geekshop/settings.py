@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6#$jd1$kqba+z6^!v5u&*tqmvae=w1g&7rm)-$vhkd^%-e0es2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -37,10 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'social_django',
+
     'mainapp',
     'authapp',
     'basketapp',
     'adminapp',
+    'ordersapp',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+
 ]
 
 ROOT_URLCONF = 'geekshop.urls'
@@ -66,6 +73,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'mainapp.context_processors.basket',
+                'mainapp.context_processors.menu_links',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -140,3 +151,33 @@ MEDIA_ROOT = BASE_DIR / 'media'
 AUTH_USER_MODEL = "authapp.ShopUser"
 
 LOGIN_URL = 'auth:login'
+
+DOMAIN_NAME = 'http://localhost:8000'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = 'django@geekshop.local'
+EMAIL_HOST_PASSWORD = 'geekshop'
+EMAIL_USE_SSL = False
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.vk.VKOAuth2',
+)
+
+with open('geekshop/vk.json', 'r') as f:
+    VK = json.load(f)
+    SOCIAL_AUTH_VK_OAUTH2_KEY = VK['SOCIAL_AUTH_VK_OAUTH2_KEY']
+    SOCIAL_AUTH_VK_OAUTH2_SECRET = VK['SOCIAL_AUTH_VK_OAUTH2_SECRET']
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.create_user',
+    'authapp.pipeline.save_user_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)

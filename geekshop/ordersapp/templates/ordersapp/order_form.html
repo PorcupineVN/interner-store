@@ -1,6 +1,11 @@
 {% extends "ordersapp/base.html" %}
 {% load static %}
 
+{% block extra_js %}
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+<script src="{% static 'js/order_scripts.js' %}"></script>
+{% endblock %}
+
 {% block content %}
    {% include 'ordersapp/includes/inc_order_summary.html' %}
    <div class="order_form">
@@ -14,7 +19,7 @@
                        <thead>
                        <tr>
                            {% for field in form.visible_fields %}
-                               <th class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
+                               <th class="{% cycle 'td1' 'td2' 'td3' 'td4'%} order formset_td">
                                    {{ field.label|capfirst }}
                                </th>
                            {% endfor %}
@@ -23,7 +28,7 @@
                    {% endif %}
                    <tr class="formset_row">
                        {% for field in form.visible_fields %}
-                           <td class="{% cycle 'td1' 'td2' 'td3' %} order formset_td">
+                           <td class="{% cycle 'td1' 'td2' 'td3' 'td4'%} order formset_td">
                                {% if forloop.first %}
                                    {% for hidden in form.hidden_fields %}
                                        {{ hidden }}

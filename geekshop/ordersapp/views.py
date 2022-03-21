@@ -2,13 +2,13 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db import transaction
-from django.http.response import HttpResponseBadRequest
+from django.http.response import HttpResponseBadRequest, JsonResponse
 from django.forms import inlineformset_factory
 
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 
-from basketapp.models import Basket
+from basketapp.models import Basket, Product
 from ordersapp.models import Order, OrderItem
 from ordersapp.forms import OrderForm, OrderItemForm
 
@@ -118,3 +118,7 @@ def order_forming_complete(request, pk):
    order.save()
 
    return HttpResponseRedirect(reverse('ordersapp:orders_list'))
+
+def product_price(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return JsonResponse({'price': product.price})

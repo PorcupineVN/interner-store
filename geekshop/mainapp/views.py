@@ -42,7 +42,7 @@ def products(request):
 def category(request, category_id, page=1):
     categories = ProductCategory.objects.all()
     category = get_object_or_404(ProductCategory, id=category_id)
-    products = Product.objects.filter(category=category)
+    products = Product.objects.filter(category=category, is_active=True)
     hot_product = get_hot_product(products)
     paginator = Paginator(products.exclude(pk=hot_product.pk), 3)
     try:

@@ -26,6 +26,7 @@ from mainapp import views as mainapp
 
 
 urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls)),
     path("admin/", admin.site.urls),
     path("", mainapp.index, name="main"),
     path("contact/", mainapp.contact, name="contact"),

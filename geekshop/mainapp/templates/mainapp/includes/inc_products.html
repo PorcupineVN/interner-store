@@ -11,12 +11,15 @@
 {% endif %}
 {% for product in products %}
 <div class="block">
+    {% with product_category=product.category %}
     <a href="{% url 'products:product' product.id %}"><img src= {% /media/{{ product.image }}  %} alt="">
         <div class="text">
             <img src="/static/img/icon-hover.png" alt="">
             <h4>{{ product.name }}</h4>
+            <h5>{{ product_category }}</h5>
             <p>{{ product.description }}</p>
         </div>
     </a>
+    {% endwith %}
 </div>
 {% endfor %}

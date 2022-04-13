@@ -6,7 +6,8 @@
     {% endif %}
     <form method='POST' url="{% url "auth:edit" %}" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
+        {{ form.as_p }}
+        {{ profile_form.as_p }}
         <input type='submit' value='Изменить'>
     </form>
 {% endblock  %}

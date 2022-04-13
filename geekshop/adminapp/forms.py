@@ -1,3 +1,4 @@
+from email.policy import default
 from django import forms
 from authapp.forms import ShopUserEditForm, ShopUserRegisterForm
 from mainapp.models import ProductCategory, Product
@@ -27,7 +28,9 @@ class ProductCategoryAdminForm(forms.ModelForm):
         model = ProductCategory
         fields = '__all__'
 
-        
+    discount = forms.IntegerField(label='скидка в процентах', required=False, min_value=0, max_value=100)
+
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():

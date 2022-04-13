@@ -1,6 +1,7 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.db.models import F
 from mainapp.models import ProductCategory
 from adminapp.forms import ProductCategoryAdminForm
 from adminapp.utils import superuser_required
@@ -39,6 +40,9 @@ def category_update(request, pk):
         form = ProductCategoryAdminForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
+            discount = form.cleaned_data.get('discount', 0)
+            new_price = F('price') * (100 - discount) * 0.01
+            category.product_set.update(price = new_price)
             return HttpResponseRedirect(reverse("admin:categories"))
     else:
        form = ProductCategoryAdminForm(instance=category)
